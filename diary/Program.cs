@@ -31,12 +31,8 @@ namespace diary
             }
             else if (choice == "3")
             {
-                Close();
+                Environment.Exit(0);
             }
-        }
-        static void Close()
-        {
-            Environment.Exit(0);
         }
         static void Read(string path)
         {
@@ -70,11 +66,15 @@ namespace diary
                 }
                 else if (keyinfo.Key == ConsoleKey.Enter)
                 {
-                    Process.Start(new ProcessStartInfo
+                    try
                     {
-                        FileName = result[index], // URL браузера будет использован как имя файла
-                        UseShellExecute = true
-                    });
+                        Process.Start(result[index]);
+                    }
+                    catch (System.ComponentModel.Win32Exception e)
+                    {
+                        Console.WriteLine("Not a link");
+                    }
+
 
                     break;
                 }
